@@ -1,0 +1,33 @@
+.hide {
+    display: none;
+}
+
+#canvas {
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#funcInputs {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    position: absolute;
+}
+
+#calculatePolynome {
+    position: absolute;
+}
+
+#operators {
+    position: absolute;
+}
+
+#canvas3D {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
