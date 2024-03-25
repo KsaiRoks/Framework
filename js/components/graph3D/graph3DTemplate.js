@@ -3,6 +3,8 @@ Template.prototype.graph3DTemplate = () => `
     <input type='checkbox' id='drawPoints' checked> 
     <label for="drawEdges">Нарисовать рёбра</label>
     <input type='checkbox' id='drawEdges' checked>
+    <label for="drawPolygons">Нарисовать полигоны</label>
+    <input type='checkbox' id='drawPolygons' checked>
     <select id = 'selectSurface'>
         <option value="cube">Куб</option>
         <option value="thor">Бублик</option>

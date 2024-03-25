@@ -24,12 +24,12 @@ Surfaces.prototype.cube = () => {
         new Edge(5, 6),
         new Edge(6, 7)
     ], [
-        new Polygon([0, 1, 2, 3], 'red'),
-        new Polygon([4, 5, 6, 7], 'green'),
-        new Polygon([1, 2, 6, 5], 'yellow'),
-        new Polygon([0, 1, 5, 4], 'purple'),
-        new Polygon([2, 6, 7, 3], 'blue'),
-        new Polygon([0, 3, 7, 4], 'orange')
+        new Polygon([0, 1, 2, 3], '#ff0000'),
+        new Polygon([4, 5, 6, 7], '#008000'),
+        new Polygon([1, 2, 6, 5], '#FFFF00'),
+        new Polygon([0, 1, 5, 4], '#BF40BF'),
+        new Polygon([2, 6, 7, 3], '#088F8F'),
+        new Polygon([0, 3, 7, 4], '#ffa500')
     ]);
 }
 // все поверхности (куб бублик элипсоид сфера и бутылка) заполнить полигонами, для каждой фигуры выбирать цвет полигонов

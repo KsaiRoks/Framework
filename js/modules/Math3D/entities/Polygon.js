@@ -4,6 +4,7 @@ class Polygon {
         this.color = this.hexToRgb(color);
         this.distance = 0;
         this.lumen = 1;
+        this.index = 0;
     };
 
     hexToRgb(hex) {
@@ -13,6 +14,6 @@ class Polygon {
     };
 
     rgbToHex(r, g, b) {
-        return `rgd(${r}, ${g}, ${b})`;
+        return `rgb(${r}, ${g}, ${b})`;
     }
 }

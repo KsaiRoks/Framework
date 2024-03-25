@@ -16,7 +16,7 @@ class Math3D {
         return (point.y - y0) / (point.z - z0) * (zs - z0) + y0;
     }
 
-    multMatrix(T, m) {
+    multPoint(T, m) {
         const a = [0, 0, 0, 0];
         for (let i = 0; i < T.length; i++) {
             let b = 0;
@@ -35,7 +35,7 @@ class Math3D {
             [0, 0, delta, 0],
             [0, 0, 0, 1]
         ];
-        const array = this.multMatrix(T, [point.x, point.y, point.z, 1]);
+        const array = this.multPoint(T, [point.x, point.y, point.z, 1]);
         point.x = array[0];
         point.y = array[1];
         point.z = array[2];
@@ -48,7 +48,7 @@ class Math3D {
             [0, 0, 1, 0],
             [dx, dy, dz, 1]
         ];
-        const array = this.multMatrix(T, [point.x, point.y, point.z, 1]);
+        const array = this.multPoint(T, [point.x, point.y, point.z, 1]);
         point.x = array[0];
         point.y = array[1];
         point.z = array[2];
@@ -61,7 +61,7 @@ class Math3D {
             [0, -Math.sin(alpha), Math.cos(alpha), 0],
             [0, 0, 0, 1]
         ];
-        const array = this.multMatrix(T, [point.x, point.y, point.z, 1]);
+        const array = this.multPoint(T, [point.x, point.y, point.z, 1]);
         point.x = array[0];
         point.y = array[1];
         point.z = array[2];
@@ -74,7 +74,7 @@ class Math3D {
             [Math.sin(alpha), 0, Math.cos(alpha), 0],
             [0, 0, 0, 1]
         ];
-        const array = this.multMatrix(T, [point.x, point.y, point.z, 1]);
+        const array = this.multPoint(T, [point.x, point.y, point.z, 1]);
         point.x = array[0];
         point.y = array[1];
         point.z = array[2];
@@ -108,12 +108,30 @@ class Math3D {
         });
     }
 
-    sortByArtistAlgorithm(surface) {
-        surface.polygons.sort((a, b) => (a.distance < b.distance) ? 1 : -1)
+    sortByArtistAlgorithm(polygons) {
+        polygons.sort((a, b) => (a.distance < b.distance) ? 1 : -1)
     }
 
     calcIllumination(distance, lumen) {
         const illum = distance ? lumen / distance ** 2 : 1;
         return illum > 1 ? 1 : illum;
     }
+
+    transform(matrix, point) {
+        const result = this.multPoint(matrix, [point.x, point.y, point.z]);
+        point.x = array[0];
+        point.y = array[1];
+        point.z = array[2];
+    }
+
+    getTransform(...args) {
+        return args.reduce((s, t) => this.multMatrix(s, t),
+            [
+                [1, 0, 0, 0],
+                [0, 1, 0, 0]
+                [0, 0, 1, 0]
+                [0, 0, 0, 1]
+            ]);
+    }
+
 }

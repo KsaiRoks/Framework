@@ -1,4 +1,4 @@
-Surfaces.prototype.thor = (count = 20, R = 10, r = 5) => {
+Surfaces.prototype.thor = ({count = 20, R = 10, r = 5, color = '#ffff00'}) => {
     const points = [];
     const edges = [];
     const polygons = [];
@@ -34,14 +34,14 @@ Surfaces.prototype.thor = (count = 20, R = 10, r = 5) => {
                 i + 1,
                 i + count + 1,
                 i + count
-            ], '#ffff00'));
+            ], color));
         } else if (points[i + 1]) {
             polygons.push(new Polygon([
                 i,
                 i + 1,
                 (i + 1) % count,
                 i % count
-            ], '#00ff00'));
+            ], color));
         }
     }
 
