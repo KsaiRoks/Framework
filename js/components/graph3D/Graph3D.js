@@ -28,7 +28,6 @@ class Graph3D extends Component {
         this.scene = this.solarSystem();
         setInterval(() => {
             this.scene.forEach(surface => surface.doAnimation(this.math3D));
-            this.renderScene();
         }, 50);
         this.dx = 0;
         this.dy = 0;
@@ -52,7 +51,7 @@ class Graph3D extends Component {
 
     wheel(event) {
         event.preventDefault();
-        const delta = (event.wheelDelta > 0) ? 0.9 : 1.2;
+        const delta = (event.wheelDelta > 0) ? 0.9 : 1.1;
         const matrix = this.math3D.zoom(delta);
         this.scene.forEach(surface => surface.points.forEach(point => this.math3D.transform(matrix, point)));
         this.graph.clear();
@@ -77,7 +76,7 @@ class Graph3D extends Component {
 
     addEventListeners() {
         document.getElementById('selectSurface').addEventListener('change', (event) => {
-            this.scene = this.surfaces[event.target.value]();
+            this.scene = [this.surfaces[event.target.value]({})];
             this.renderScene();
         });
 
@@ -100,8 +99,12 @@ class Graph3D extends Component {
         if (this.drawPolygons) {
             const polygons = [];
             this.scene.forEach((surface, index) => {
-                this.math3D.callDistance(surface, this.WIN.CAMERA, 'distance');
-                this.math3D.callDistance(surface, this.LIGHT, 'lumen');
+                this.math3D.callCenter(surface);
+                this.math3D.callRadius(surface);
+                this.math3D.callDistance(surface, CAMERA);
+                this.math3D.callDistance(surface. LIGHT);
+                this.math3D.callDistance(surface, this.WIN.CAMERA, 'distance'); // Убрать?
+                this.math3D.callDistance(surface, this.LIGHT, 'lumen'); // Убрать?
                 surface.polygons.forEach(polygon => {
                     polygon.index = index;
                     polygons.push(polygon);
@@ -117,7 +120,8 @@ class Graph3D extends Component {
                         this.math3D.ys(this.scene[polygon.index].points[index])
                     )
                 );
-                const lumen = this.math3D.calcIllumination(polygon.lumen, this.LIGHT.lumen);
+                const {isShadow, dark} = this.math3D.calcShadow(polygon, this.scene, this.LIGHT);
+                const lumen = this.math3D.calcIllumination(polygon.lumen, this.LIGHT.lumen * (isShadow ? dark : 1));
                 let { r, g, b } = polygon.color;
                 r = Math.round(r * lumen);
                 g = Math.round(g * lumen);
@@ -147,11 +151,11 @@ class Graph3D extends Component {
     }
 
     solarSystem(){
-        const Earth = this.surfaces.sphere();
-        Earth.addAnimation('rotateOX', 0.1);
-        const Moon = this.surfaces.cube();
+        const Earth = this.surfaces.sphere({r:5, color:'#00ffff'});
+        Earth.addAnimation('rotateOY', 0.1);
+        const Moon = this.surfaces.sphere({ r: 2, y0: 16 });
         Moon.addAnimation('rotateOX', 0.2);
-        Moon.addAnimation('rotateOZ', 0.5);
+        Moon.addAnimation('rotateOZ', 0.05, Earth.center);
         return [Earth, Moon];
     }
 }
